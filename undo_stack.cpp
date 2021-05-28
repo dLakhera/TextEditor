@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stack>
 #include <string>
-#include <vector>
 
 using namespace std;
 
@@ -26,26 +25,35 @@ void UndoStack::readTheTree()
     stack<string> temp;
 
     while(!undoStack.empty()) {
-        
+        temp.push(undoStack.top());
+        undoStack.pop();
     }
+
+    while(!temp.empty()) {
+        cout<<temp.top()<<" ";
+        undoStack.push(temp.top());
+        temp.pop();
+    } cout<<endl;
 }
 
 void UndoStack::undo() 
 {
-    
+    if(!undoStack.empty()) return;
+    redoStack.push(undoStack.top());
+    undoStack.pop();
 }
 
 void UndoStack::redo() 
 {
-    
+    if(!redoStack.empty()) return;
+    undoStack.push(redoStack.top());
+    redoStack.pop();
 }
 
-void UndoStack::addNodeToTree(string) 
+void UndoStack::addNodeToTree(string str) 
 {
-    
+    this->undoStack.push(str);
 }
-
-
 
 void textEditor()
 {
